@@ -1,0 +1,152 @@
+---
+layout: base.njk
+title: Contact — Flatirons Creative Studio
+description: Start a project or book a free 30-minute call with Flatirons Creative Studio in Boulder, CO.
+permalink: /contact/
+---
+
+<div class="page-header">
+  <div class="inner">
+    <div class="section-label">Get in touch</div>
+    <h1>Start a project.<br><em>Or just say hello.</em></h1>
+    <p>Fill in the form below or book a call directly. No pitch decks, no proposal theatre — just an honest conversation about whether we're a fit.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="inner">
+    <div class="contact-grid">
+
+      <!-- Form -->
+      <div>
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xpzgwbgp" method="POST">
+          <input type="hidden" name="services" id="services-input">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="field">
+              <label for="fname">First name</label>
+              <input type="text" id="fname" name="first_name" placeholder="Jane" required>
+            </div>
+            <div class="field">
+              <label for="lname">Last name</label>
+              <input type="text" id="lname" name="last_name" placeholder="Smith" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@company.com" required>
+          </div>
+
+          <div class="field">
+            <label for="company">Company / website (optional)</label>
+            <input type="text" id="company" name="company" placeholder="Acme Inc · acme.com">
+          </div>
+
+          <div class="field">
+            <label>Services you're interested in</label>
+            <div class="chips" id="chips">
+              <button type="button" class="chip" data-v="Web design &amp; build">Web design &amp; build</button>
+              <button type="button" class="chip" data-v="AI Clarity Index">AI Clarity Index</button>
+              <button type="button" class="chip" data-v="SEO retainer">SEO retainer</button>
+              <button type="button" class="chip" data-v="AI productivity">AI productivity</button>
+              <button type="button" class="chip" data-v="Custom SaaS">Custom SaaS</button>
+              <button type="button" class="chip" data-v="Not sure yet">Not sure yet</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="budget">Budget range</label>
+            <select id="budget" name="budget">
+              <option value="">Select a range…</option>
+              <option>Under $5k</option>
+              <option>$5k – $15k</option>
+              <option>$15k – $40k</option>
+              <option>$40k+</option>
+              <option>Monthly retainer</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Tell us about your project</label>
+            <textarea id="message" name="message" placeholder="What's the goal, what exists today, and what's keeping you up at night?" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-amber btn-lg" id="contactSubmit" style="align-self:flex-start">
+            <span class="btn-label">Send enquiry</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </button>
+
+          <p id="sent" hidden style="color:#3a7a4a;font-weight:600;margin-top:8px">✓ Sent — we'll be in touch within one business day.</p>
+          <p id="sendError" hidden style="color:#a04040;font-weight:600;margin-top:8px">Something went wrong. Email us directly at hello@flatironscreativestudio.com</p>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="contact-side">
+        <div class="contact-card">
+          <h4>Book a call instead</h4>
+          <p>30 minutes. No prep needed. We'll tell you what we'd do if we were you — even if the answer is "not Flatirons."</p>
+          <a href="#" class="btn btn-amber" data-calendly>Book 30-min call ↗</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="info-row">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <h5>Email</h5>
+              <p><a href="mailto:hello@flatironscreativestudio.com">hello@flatironscreativestudio.com</a></p>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h5>Location</h5>
+              <p>Boulder, Colorado</p>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <h5>Response time</h5>
+              <p>Within one business day</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-card" style="background:var(--ink);color:var(--cream);border-color:transparent">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:10px">Typical engagement</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;font-size:14px">
+              <span style="color:rgba(245,240,232,.6)">Discovery call</span>
+              <span style="color:var(--cream);font-weight:500">Free · 30 min</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:14px">
+              <span style="color:rgba(245,240,232,.6)">Web design &amp; build</span>
+              <span style="color:var(--cream);font-weight:500">From $6k</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:14px">
+              <span style="color:rgba(245,240,232,.6)">AI Clarity audit</span>
+              <span style="color:var(--cream);font-weight:500">From $3k</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:14px">
+              <span style="color:rgba(245,240,232,.6)">SEO retainer</span>
+              <span style="color:var(--cream);font-weight:500">From $2k/mo</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:14px">
+              <span style="color:rgba(245,240,232,.6)">Custom SaaS</span>
+              <span style="color:var(--cream);font-weight:500">From $40k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

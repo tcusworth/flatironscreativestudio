@@ -1,0 +1,12 @@
+{
+  "name": "flatirons-creative-studio",
+  "version": "2.0.0",
+  "description": "Flatirons Creative Studio website — Vista theme",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
+}
