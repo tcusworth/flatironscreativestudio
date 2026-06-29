@@ -297,3 +297,24 @@ ul { list-style: none; }
   color: #c8961e;
   margin-bottom: 10px;
 }
+
+/* Logo */
+.nav-logo-img {
+  height: 44px;
+  width: auto;
+  display: block;
+  transition: opacity .2s;
+}
+.nav-logo:hover .nav-logo-img { opacity: .85; }
+
+/* On transparent nav the logo has a white bg so it always shows clearly */
+.has-transparent-nav .nav:not(.scrolled) .nav-logo-img {
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,.4));
+}
+
+.footer-logo-img {
+  height: 56px;
+  width: auto;
+  display: block;
+  margin-bottom: 16px;
+}
