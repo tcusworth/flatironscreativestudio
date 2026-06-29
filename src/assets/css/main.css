@@ -319,17 +319,12 @@ ul { list-style: none; }
   margin-bottom: 16px;
 }
 
-/* Logo transparent bg fix */
+/* Logo */
 .nav-logo-img {
   height: 44px;
   width: auto;
   display: block;
-  mix-blend-mode: multiply;
   transition: opacity .2s;
-}
-.has-transparent-nav .nav:not(.scrolled) .nav-logo-img {
-  mix-blend-mode: screen;
-  filter: brightness(1.1);
 }
 .nav-logo:hover .nav-logo-img { opacity: .85; }
 .nav-logo-name {
