@@ -86,9 +86,28 @@
   els.forEach(el => io.observe(el));
 })();
 
-// ── Service chips ──
+// ── Service chips (handles multiple chip groups by closest container) ──
 (function() {
+  const groups = [
+    { containerId: 'chips',     inputId: 'services-input' },
+    { containerId: 'goalChips', inputId: 'goals-input' }
+  ];
+  groups.forEach(({ containerId, inputId }) => {
+    const container = document.getElementById(containerId);
+    const input = document.getElementById(inputId);
+    if (!container) return;
+    container.querySelectorAll('.chip[data-v]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('on');
+        if (input) {
+          input.value = [...container.querySelectorAll('.chip.on')].map(c => c.dataset.v).join(', ');
+        }
+      });
+    });
+  });
+  // Fallback for contact page's single un-grouped #chips with no container wrap issues
   document.querySelectorAll('.chip[data-v]').forEach(chip => {
+    if (chip.closest('#chips') || chip.closest('#goalChips')) return;
     chip.addEventListener('click', () => {
       chip.classList.toggle('on');
       const input = document.getElementById('services-input');
@@ -97,26 +116,32 @@
   });
 })();
 
-// ── Contact form ──
+// ── Generic Formspree submit handler (works for contact + intake forms) ──
 (function() {
-  const form = document.getElementById('contactForm');
-  if (!form) return;
-  const submit = document.getElementById('contactSubmit');
-  const label  = submit?.querySelector('.btn-label');
-  const sent   = document.getElementById('sent');
-  const err    = document.getElementById('sendError');
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    if (sent) sent.hidden = true;
-    if (err)  err.hidden  = true;
-    if (submit) submit.disabled = true;
-    if (label)  label.textContent = 'Sending…';
-    try {
-      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      if (res.ok) { if (sent) sent.hidden = false; form.reset(); document.querySelectorAll('.chip.on').forEach(c => c.classList.remove('on')); }
-      else { if (err) err.hidden = false; }
-    } catch (_) { if (err) err.hidden = false; }
-    finally { if (submit) submit.disabled = false; if (label) label.textContent = 'Send enquiry'; }
+  const forms = [
+    { formId: 'contactForm', submitId: 'contactSubmit', sentId: 'sent',       errId: 'sendError',   resetLabel: 'Send enquiry' },
+    { formId: 'intakeForm',  submitId: 'intakeSubmit',  sentId: 'intakeSent', errId: 'intakeError',  resetLabel: 'Send project details' }
+  ];
+  forms.forEach(({ formId, submitId, sentId, errId, resetLabel }) => {
+    const form = document.getElementById(formId);
+    if (!form) return;
+    const submit = document.getElementById(submitId);
+    const label  = submit?.querySelector('.btn-label');
+    const sent   = document.getElementById(sentId);
+    const err    = document.getElementById(errId);
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (sent) sent.hidden = true;
+      if (err)  err.hidden  = true;
+      if (submit) submit.disabled = true;
+      if (label)  label.textContent = 'Sending…';
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        if (res.ok) { if (sent) sent.hidden = false; form.reset(); form.querySelectorAll('.chip.on').forEach(c => c.classList.remove('on')); }
+        else { if (err) err.hidden = false; }
+      } catch (_) { if (err) err.hidden = false; }
+      finally { if (submit) submit.disabled = false; if (label) label.textContent = resetLabel; }
+    });
   });
 })();
 

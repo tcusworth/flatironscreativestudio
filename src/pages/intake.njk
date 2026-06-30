@@ -1,0 +1,152 @@
+---
+layout: base.njk
+title: Project Intake — Flatirons Creative Studio
+description: Tell us about your project. The more detail you share, the faster we can scope and quote your work.
+permalink: /intake/
+---
+
+<div class="page-header">
+  <div class="ph-inner">
+    <div class="eyebrow">New project</div>
+    <h1>Tell us about<br><em>your project.</em></h1>
+    <p>The more detail you give us here, the faster we can scope, price, and start. Take your time — there's no rush, and nothing here is final.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="inner" style="max-width:760px">
+    <form class="contact-form" id="intakeForm" action="https://formspree.io/f/mlgywowo" method="POST">
+      <input type="hidden" name="form_type" value="Project Intake">
+      <input type="hidden" name="services" id="services-input">
+      <input type="hidden" name="goals" id="goals-input">
+
+      <!-- Section: About you -->
+      <div class="intake-section-label">01 / About you</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="field">
+          <label for="fname">First name</label>
+          <input type="text" id="fname" name="first_name" placeholder="Jane" required>
+        </div>
+        <div class="field">
+          <label for="lname">Last name</label>
+          <input type="text" id="lname" name="last_name" placeholder="Smith" required>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="jane@company.com" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone (optional)</label>
+          <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="company">Company / business name</label>
+        <input type="text" id="company" name="company" placeholder="Acme Inc">
+      </div>
+
+      <div class="field">
+        <label for="existing_site">Current website (if any)</label>
+        <input type="text" id="existing_site" name="existing_site" placeholder="acme.com or 'none yet'">
+      </div>
+
+      <!-- Section: The project -->
+      <div class="intake-section-label">02 / The project</div>
+
+      <div class="field">
+        <label>What do you need? (select all that apply)</label>
+        <div class="chips" id="chips">
+          <button type="button" class="chip" data-v="Web design &amp; build">Web design &amp; build</button>
+          <button type="button" class="chip" data-v="AI Clarity Index">AI Clarity Index</button>
+          <button type="button" class="chip" data-v="SEO retainer">SEO retainer</button>
+          <button type="button" class="chip" data-v="AI productivity">AI productivity</button>
+          <button type="button" class="chip" data-v="Custom SaaS">Custom SaaS</button>
+          <button type="button" class="chip" data-v="Not sure yet">Not sure yet</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="problem">What problem are you trying to solve?</label>
+        <textarea id="problem" name="problem" placeholder="What's not working today? What made you reach out now?" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="audience">Who is this for?</label>
+        <textarea id="audience" name="audience" placeholder="Who are your customers or users? What do they need to do on the site/tool?"></textarea>
+      </div>
+
+      <div class="field">
+        <label>What does success look like? (select all that apply)</label>
+        <div class="chips" id="goalChips">
+          <button type="button" class="chip" data-v="More leads/sales">More leads/sales</button>
+          <button type="button" class="chip" data-v="Better brand impression">Better brand impression</button>
+          <button type="button" class="chip" data-v="Save time/automate work">Save time/automate work</button>
+          <button type="button" class="chip" data-v="Rank higher in search">Rank higher in search</button>
+          <button type="button" class="chip" data-v="Show up in AI answers">Show up in AI answers</button>
+          <button type="button" class="chip" data-v="Replace old/broken site">Replace old/broken site</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="inspiration">Sites or brands you like (optional)</label>
+        <input type="text" id="inspiration" name="inspiration" placeholder="Links or names — what do you like about them?">
+      </div>
+
+      <!-- Section: Scope -->
+      <div class="intake-section-label">03 / Scope &amp; timing</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="field">
+          <label for="budget">Budget range</label>
+          <select id="budget" name="budget">
+            <option value="">Select a range…</option>
+            <option>Under $5k</option>
+            <option>$5k – $15k</option>
+            <option>$15k – $40k</option>
+            <option>$40k+</option>
+            <option>Monthly retainer</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="timeline">Timeline</label>
+          <select id="timeline" name="timeline">
+            <option value="">Select a timeline…</option>
+            <option>ASAP (4 weeks)</option>
+            <option>1–2 months</option>
+            <option>2–3 months</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="content">Do you have existing content (copy, photos, branding)?</label>
+        <select id="content" name="content_status">
+          <option value="">Select one…</option>
+          <option>Yes, everything's ready</option>
+          <option>Some of it — needs work</option>
+          <option>No, we need help with this too</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="anything_else">Anything else we should know?</label>
+        <textarea id="anything_else" name="anything_else" placeholder="Constraints, must-haves, internal stakeholders, anything that would help us scope this right."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-amber btn-lg" id="intakeSubmit" style="align-self:flex-start;margin-top:8px">
+        <span class="btn-label">Send project details</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+      </button>
+
+      <p id="intakeSent" hidden style="color:#3a7a4a;font-weight:600;margin-top:8px">✓ Sent — thanks! We'll review and follow up within one business day.</p>
+      <p id="intakeError" hidden style="color:#a04040;font-weight:600;margin-top:8px">Something went wrong. Email us directly at hello@flatironscreativestudio.com</p>
+    </form>
+  </div>
+</section>
