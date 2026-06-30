@@ -100,29 +100,15 @@ permalink: /intake/
       <!-- Section: Scope -->
       <div class="intake-section-label">03 / Scope &amp; timing</div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div class="field">
-          <label for="budget">Budget range</label>
-          <select id="budget" name="budget">
-            <option value="">Select a range…</option>
-            <option>Under $5k</option>
-            <option>$5k – $15k</option>
-            <option>$15k – $40k</option>
-            <option>$40k+</option>
-            <option>Monthly retainer</option>
-            <option>Not sure yet</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="timeline">Timeline</label>
-          <select id="timeline" name="timeline">
-            <option value="">Select a timeline…</option>
-            <option>ASAP (4 weeks)</option>
-            <option>1–2 months</option>
-            <option>2–3 months</option>
-            <option>Flexible</option>
-          </select>
-        </div>
+      <div class="field">
+        <label for="timeline">Timeline</label>
+        <select id="timeline" name="timeline">
+          <option value="">Select a timeline…</option>
+          <option>ASAP (4 weeks)</option>
+          <option>1–2 months</option>
+          <option>2–3 months</option>
+          <option>Flexible</option>
+        </select>
       </div>
 
       <div class="field">
@@ -132,6 +118,50 @@ permalink: /intake/
           <option>Yes, everything's ready</option>
           <option>Some of it — needs work</option>
           <option>No, we need help with this too</option>
+        </select>
+      </div>
+
+      <!-- Section: Technical -->
+      <div class="intake-section-label">04 / Technical &amp; hosting</div>
+
+      <div class="field">
+        <label for="domain">Do you already own a domain name?</label>
+        <select id="domain" name="domain_status">
+          <option value="">Select one…</option>
+          <option>Yes, I own it</option>
+          <option>No, need help registering one</option>
+          <option>Not sure / need guidance</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="hosting">Where is your site currently hosted? (if applicable)</label>
+        <input type="text" id="hosting" name="current_hosting" placeholder="e.g. GoDaddy, Squarespace, WordPress, Wix, or 'no site yet'">
+      </div>
+
+      <div class="field">
+        <label for="hosting_pref">Hosting preference</label>
+        <select id="hosting_pref" name="hosting_preference">
+          <option value="">Select one…</option>
+          <option>No preference — recommend something</option>
+          <option>I'd like to keep my current host</option>
+          <option>I want to own/manage hosting myself</option>
+          <option>I'd like Flatirons to manage hosting</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="integrations">Any required integrations or tools?</label>
+        <textarea id="integrations" name="integrations" placeholder="e.g. CRM, booking/scheduling, payment processing, email marketing, analytics, live chat, membership/login system"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="email_hosting">Do you need business email set up (e.g. you@yourdomain.com)?</label>
+        <select id="email_hosting" name="email_setup">
+          <option value="">Select one…</option>
+          <option>Yes, need this set up</option>
+          <option>No, already have it</option>
+          <option>Not sure</option>
         </select>
       </div>
 
