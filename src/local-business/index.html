@@ -68,8 +68,11 @@
     display:flex; align-items:center; justify-content:space-between;
     padding-top:18px; padding-bottom:18px;
   }
-  .logo{display:flex; align-items:center; text-decoration:none;}
-  .logo img{height:34px; width:auto; display:block;}
+  .logo{display:flex; align-items:center; gap:10px; text-decoration:none;}
+  .logo img{height:40px; width:auto; display:block;}
+  .logo-name{font-family:'Poppins',sans-serif; font-weight:700; font-size:0.92rem; color:var(--cream); white-space:nowrap; display:none;}
+  .logo-name em{font-style:italic; font-weight:400; opacity:0.7;}
+  @media(min-width:560px){.logo-name{display:block;}}
   .nav-cta{display:flex; align-items:center; gap:22px;}
   .nav-phone{color:var(--cream); font-size:0.92rem; font-weight:500; text-decoration:none; display:none;}
   @media(min-width:720px){.nav-phone{display:inline-block;}}
@@ -193,31 +196,36 @@
   .cost-item p{font-size:0.98rem; color:rgba(15,14,10,0.8);}
 
   /* ---------- SERVICES ---------- */
-  .services{padding:96px 0 80px;}
-  .services-head{max-width:56ch; margin-bottom:56px;}
-  .services-head h2{font-size:clamp(2rem,4vw,2.8rem);}
-  .services-head p{margin-top:16px; font-size:1.05rem; color:rgba(15,14,10,0.72); font-weight:300;}
+  .services{padding:72px 0 64px;}
+  .services-head{max-width:56ch; margin-bottom:36px;}
+  .services-head h2{font-size:clamp(1.9rem,3.6vw,2.6rem);}
+  .services-head p{margin-top:12px; font-size:0.98rem; color:rgba(15,14,10,0.72); font-weight:300;}
+
+  .services-grid{
+    display:grid; grid-template-columns:1fr; gap:14px;
+  }
+  @media(min-width:700px){.services-grid{grid-template-columns:1fr 1fr;}}
+  @media(min-width:1000px){.services-grid{grid-template-columns:repeat(3,1fr);}}
 
   .service-row{
-    display:grid; grid-template-columns:1fr; gap:20px;
-    padding:34px 0;
-    border-top:1px solid var(--line);
+    display:grid; grid-template-columns:44px 1fr; gap:12px 14px;
+    background:var(--cream-dim);
+    border-radius:16px;
+    padding:20px 20px 18px;
     align-items:start;
   }
-  .service-row:last-of-type{border-bottom:1px solid var(--line);}
-  @media(min-width:760px){
-    .service-row{grid-template-columns:64px 1fr 1.1fr; gap:28px; align-items:center;}
-  }
   .service-icon{
-    width:56px; height:56px; border-radius:14px;
+    width:44px; height:44px; border-radius:11px;
     background:var(--ink); color:var(--amber-light);
     display:flex; align-items:center; justify-content:center;
     flex-shrink:0;
   }
-  .service-icon svg{width:26px; height:26px;}
-  .service-name h3{font-size:1.5rem; text-transform:none;}
-  .service-name .tag{font-size:0.82rem; color:var(--amber); font-weight:600; margin-top:2px;}
-  .service-desc p{font-size:0.98rem; color:rgba(15,14,10,0.75);}
+  .service-icon svg{width:21px; height:21px;}
+  .service-name{grid-column:2;}
+  .service-name h3{font-size:1.12rem; text-transform:none; line-height:1.1;}
+  .service-name .tag{font-size:0.72rem; color:var(--amber); font-weight:600; margin-top:3px;}
+  .service-desc{grid-column:2;}
+  .service-desc p{font-size:0.86rem; line-height:1.45; color:rgba(15,14,10,0.72); margin-top:8px;}
 
   /* ---------- PROCESS ---------- */
   .process{
@@ -366,7 +374,7 @@
 
 <nav>
   <div class="wrap">
-    <a href="/" class="logo"><img src="/assets/img/flatirons-logo-white.png" alt="Flatirons Creative Studio"></a>
+    <a href="/" class="logo"><img src="/assets/img/logo.png" alt="Flatirons Creative Studio"><span class="logo-name">Flatirons <em>Creative Studio</em></span></a>
     <div class="nav-cta">
       <a href="tel:+17194971641" class="nav-phone">(719) 497-1641</a>
       <a href="#book" class="btn btn-outline">Book a free call</a>
@@ -428,12 +436,14 @@
       <p>Each piece solves a specific way you're losing business today. Together, they make sure nobody who wants to give you money slips through.</p>
     </div>
 
+    <div class="services-grid">
+
     <div class="service-row reveal">
       <div class="service-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 16.5v2.7a1.8 1.8 0 0 1-2 1.8 17.8 17.8 0 0 1-7.8-2.8 17.5 17.5 0 0 1-5.4-5.4A17.8 17.8 0 0 1 3 5a1.8 1.8 0 0 1 1.8-2h2.7a1.8 1.8 0 0 1 1.8 1.5c.1.9.4 1.8.7 2.7a1.8 1.8 0 0 1-.4 1.9L8.4 10a14.4 14.4 0 0 0 5.4 5.4l1-1.2a1.8 1.8 0 0 1 1.9-.4c.9.3 1.8.5 2.7.7A1.8 1.8 0 0 1 21 16.5Z"/></svg>
       </div>
       <div class="service-name"><h3>AI receptionist</h3><div class="tag">Never miss a call again</div></div>
-      <div class="service-desc"><p>An AI answers every call your business doesn't — nights, weekends, or while you're busy with a job. It talks to the caller, answers the basics, and books or logs the lead so you're not chasing missed calls.</p></div>
+      <div class="service-desc"><p>Answers every call your business doesn't, day or night, and books or logs the lead.</p></div>
     </div>
 
     <div class="service-row reveal">
@@ -441,7 +451,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l1.9 4.3 4.6.6-3.4 3.3.9 4.7L12 13.7 7.9 15.9l.9-4.7L5.4 7.9l4.6-.6L12 3Z"/></svg>
       </div>
       <div class="service-name"><h3>Review management</h3><div class="tag">Turn happy customers into 5 stars</div></div>
-      <div class="service-desc"><p>After every job, a text or email invites the customer to leave a review — automatically. Good reviews get shared. Anything negative gets flagged to you first, so you can make it right before it's public.</p></div>
+      <div class="service-desc"><p>Sends the review request automatically and flags anything negative to you first.</p></div>
     </div>
 
     <div class="service-row reveal">
@@ -449,15 +459,15 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7.5"/><path d="M21 21l-4.5-4.5"/></svg>
       </div>
       <div class="service-name"><h3>Local SEO</h3><div class="tag">Show up when people search</div></div>
-      <div class="service-desc"><p>Your business gets set up to show up on Google Maps and search when someone nearby types "near me." Most local business is won or lost right here, before a customer even sees your website.</p></div>
+      <div class="service-desc"><p>Gets your business showing up on Google Maps when someone nearby searches.</p></div>
     </div>
 
     <div class="service-row reveal">
       <div class="service-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
       </div>
-      <div class="service-name"><h3>Google Business Profile</h3><div class="tag">Win the map pin and the phone-number click</div></div>
-      <div class="service-desc"><p>Your Google listing gets filled out, verified, and kept current — photos, hours, services, service area — so it's the one that shows up (and looks trustworthy) when someone searches nearby.</p></div>
+      <div class="service-name"><h3>Google Business Profile</h3><div class="tag">Win the map pin and the click</div></div>
+      <div class="service-desc"><p>Kept filled out, verified, and current — photos, hours, service area, all of it.</p></div>
     </div>
 
     <div class="service-row reveal">
@@ -465,7 +475,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
       </div>
       <div class="service-name"><h3>Website</h3><div class="tag">Make you look as good as you are</div></div>
-      <div class="service-desc"><p>A clean, fast site built to make a good first impression and make it easy to call, text, or book you — on any phone, in any light.</p></div>
+      <div class="service-desc"><p>Clean and fast, built to make it easy to call, text, or book you on any phone.</p></div>
     </div>
 
     <div class="service-row reveal">
@@ -473,15 +483,15 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12c0-1 1-2 2-2h1V8a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2h1c1 0 2 1 2 2v5c0 1-1 2-2 2H6c-1 0-2-1-2-2v-5Z"/><circle cx="9" cy="15" r="1"/><circle cx="15" cy="15" r="1"/></svg>
       </div>
       <div class="service-name"><h3>Website chatbot</h3><div class="tag">Answers questions day or night</div></div>
-      <div class="service-desc"><p>A chat box on your website answers common questions instantly — pricing, hours, what you offer — and passes on real leads to you the moment they're ready to talk.</p></div>
+      <div class="service-desc"><p>Handles common questions instantly and passes on real leads the moment they're ready.</p></div>
     </div>
 
     <div class="service-row reveal">
       <div class="service-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg>
       </div>
-      <div class="service-name"><h3>Text-back system</h3><div class="tag">A missed call gets a reply in seconds</div></div>
-      <div class="service-desc"><p>Miss a call and the caller gets an instant text back, so they know you saw it and you'll be in touch — instead of assuming you don't care and calling the next name on the list.</p></div>
+      <div class="service-name"><h3>Text-back system</h3><div class="tag">A reply in seconds, every time</div></div>
+      <div class="service-desc"><p>Miss a call and the caller gets an instant text back, automatically.</p></div>
     </div>
 
     <div class="service-row reveal">
@@ -489,7 +499,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h11l5 5v11H4V4Z"/><path d="M15 4v5h5"/></svg>
       </div>
       <div class="service-name"><h3>Lead follow-up</h3><div class="tag">Nobody falls through the cracks</div></div>
-      <div class="service-desc"><p>Every lead — call, text, form, or chat — gets tracked and followed up automatically, so a busy week never quietly costs you a sale.</p></div>
+      <div class="service-desc"><p>Every call, text, form, and chat gets tracked and followed up automatically.</p></div>
     </div>
 
     <div class="service-row reveal">
@@ -497,9 +507,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.6 1Z"/></svg>
       </div>
       <div class="service-name"><h3>Automations</h3><div class="tag">The busywork runs itself</div></div>
-      <div class="service-desc"><p>Appointment reminders, follow-up messages, review requests, and lead routing all run in the background — no extra hours in your day, no software for you to learn.</p></div>
+      <div class="service-desc"><p>Reminders, follow-ups, and review requests all run in the background.</p></div>
     </div>
 
+    </div>
   </div>
 </section>
 
