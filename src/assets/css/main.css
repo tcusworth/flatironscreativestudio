@@ -755,7 +755,17 @@ body.page-enter { animation: vtIn .5s cubic-bezier(.16,1,.3,1) both; }
 .up-meta textarea { min-height: 90px; }
 @media (max-width: 600px) { .up-meta > div[style*="grid"] { grid-template-columns: 1fr !important; } }
 
-.up-actions { margin-top: 28px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+/* Sticky, so the upload button follows you down the page and can't be missed. */
+.up-actions {
+  position: sticky; bottom: 0; z-index: 5;
+  margin-top: 28px; padding: 16px 0;
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  background: rgba(255,255,255,.97);
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.up-summary { font-size: 13px; color: #888; margin-left: auto; }
+.up-pending { color: #c8961e; font-weight: 700; }
+@media (max-width: 600px) { .up-summary { margin-left: 0; width: 100%; } }
 .up-actions .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
 
 .up-error {
