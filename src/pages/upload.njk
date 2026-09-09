@@ -75,8 +75,9 @@ eleventyExcludeFromCollections: true
       </div>
 
       <div class="up-actions" id="up-actions" hidden>
-        <button type="button" class="btn btn-amber btn-lg" id="up-send">Upload <span id="up-count"></span></button>
+        <button type="button" class="btn btn-amber btn-lg" id="up-send"><span id="up-count">Upload</span></button>
         <button type="button" class="btn btn-outline" id="up-clear">Clear all</button>
+        <span class="up-summary" id="up-summary"></span>
       </div>
 
       <p class="up-error" id="up-error" hidden></p>
@@ -113,6 +114,7 @@ eleventyExcludeFromCollections: true
     send:     document.getElementById('up-send'),
     clear:    document.getElementById('up-clear'),
     count:    document.getElementById('up-count'),
+    summary:  document.getElementById('up-summary'),
     error:    document.getElementById('up-error'),
     again:    document.getElementById('up-again'),
     name:     document.getElementById('up-name'),
@@ -193,7 +195,17 @@ eleventyExcludeFromCollections: true
 
       var sub = document.createElement('div');
       sub.className = 'up-row-sub';
-      sub.textContent = item.message || humanSize(item.file.size);
+      if (item.message) {
+        sub.textContent = item.message;
+      } else if (item.status === 'queued') {
+        sub.appendChild(document.createTextNode(humanSize(item.file.size) + ' \u00b7 '));
+        var flag = document.createElement('strong');
+        flag.className = 'up-pending';
+        flag.textContent = 'Ready \u2014 not uploaded yet';
+        sub.appendChild(flag);
+      } else {
+        sub.textContent = humanSize(item.file.size);
+      }
 
       var bar = document.createElement('div');
       bar.className = 'up-bar';
@@ -232,9 +244,16 @@ eleventyExcludeFromCollections: true
       el.list.appendChild(li);
     });
 
-    var pending = queue.filter(function (q) { return q.status === 'queued'; }).length;
+    var waiting = queue.filter(function (q) { return q.status === 'queued'; });
+    var pending = waiting.length;
+    var pendingBytes = waiting.reduce(function (sum, q) { return sum + q.file.size; }, 0);
     if (queue.length) { show(el.meta); show(el.actions); } else { hide(el.meta); hide(el.actions); }
-    el.count.textContent = pending ? '(' + pending + ')' : '';
+    el.count.textContent = busy
+      ? 'Uploading\u2026'
+      : (pending ? 'Upload ' + pending + ' file' + (pending === 1 ? '' : 's') : 'Upload');
+    el.summary.textContent = (!busy && pending)
+      ? humanSize(pendingBytes) + ' waiting to send'
+      : '';
     el.send.disabled = busy || pending === 0;
     el.clear.disabled = busy;
   }
