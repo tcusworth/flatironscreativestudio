@@ -1,2 +1,6 @@
 node_modules/
 _site/
+.env
+.env.*
+.netlify/
+.DS_Store
