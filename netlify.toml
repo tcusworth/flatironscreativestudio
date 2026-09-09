@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = "_site"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/upload-url"
+  to = "/.netlify/functions/upload-url"
+  status = 200
+
+[[redirects]]
+  from = "/api/upload-complete"
+  to = "/.netlify/functions/upload-complete"
+  status = 200
+
+# The upload page is token-gated in the browser; keep it out of search results.
+[[headers]]
+  for = "/upload/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

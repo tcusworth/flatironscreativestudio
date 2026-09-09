@@ -1,0 +1,403 @@
+---
+layout: base.njk
+title: Send Us Your Artwork — Flatirons Creative Studio
+description: Secure file upload for Flatirons Creative Studio clients.
+permalink: /upload/
+eleventyExcludeFromCollections: true
+---
+
+<div class="page-header">
+  <div class="ph-inner">
+    <div class="eyebrow">Secure upload</div>
+    <h1>Send us<br><em>your artwork.</em></h1>
+    <p>Drop your files below — full-resolution originals are welcome, and nothing gets compressed on the way. Files go straight from your computer to our storage. No account, no sign-in.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="inner" style="max-width:760px">
+
+    <!-- Checking the link -->
+    <div id="up-checking" class="up-state">
+      <div class="up-spinner" aria-hidden="true"></div>
+      <p>Checking your upload link…</p>
+    </div>
+
+    <!-- Bad or missing link -->
+    <div id="up-denied" class="up-state" hidden>
+      <div class="up-state-icon">🔒</div>
+      <h3>This upload link isn't valid</h3>
+      <p>It may have expired, or the address may have been copied incompletely. Email <a href="mailto:hello@flatironscreativestudio.com">hello@flatironscreativestudio.com</a> and we'll send you a fresh one.</p>
+    </div>
+
+    <!-- The uploader -->
+    <div id="up-app" hidden>
+      <div class="up-greeting">
+        <span class="up-greeting-label">Uploading for</span>
+        <strong id="up-client">—</strong>
+      </div>
+
+      <div class="up-dropzone" id="up-dz" tabindex="0" role="button"
+           aria-label="Choose files or drag them here">
+        <div class="up-dz-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+        </div>
+        <p class="up-dz-title">Drag your artwork here</p>
+        <p class="up-dz-sub">or <span class="up-dz-browse">browse your files</span></p>
+        <p class="up-dz-types">JPG · PNG · TIFF · HEIC · RAW · PSD · PDF · ZIP — up to <span id="up-maxsize">500 MB</span> each</p>
+        <input type="file" id="up-input" multiple hidden
+               accept=".jpg,.jpeg,.png,.gif,.webp,.tif,.tiff,.heic,.heif,.bmp,.psd,.dng,.cr2,.cr3,.nef,.arw,.raf,.orf,.pdf,.ai,.eps,.zip">
+      </div>
+
+      <ul class="up-list" id="up-list"></ul>
+
+      <div class="up-meta" id="up-meta" hidden>
+        <div class="intake-section-label">Anything we should know?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="field">
+            <label for="up-name">Your name</label>
+            <input type="text" id="up-name" placeholder="Jane Smith" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="up-email">Your email</label>
+            <input type="email" id="up-email" placeholder="jane@example.com" autocomplete="email">
+          </div>
+        </div>
+        <div class="field">
+          <label for="up-note">Notes (optional)</label>
+          <textarea id="up-note" placeholder="Titles, dimensions, medium, which pieces are priority — anything that helps."></textarea>
+        </div>
+      </div>
+
+      <div class="up-actions" id="up-actions" hidden>
+        <button type="button" class="btn btn-amber btn-lg" id="up-send">Upload <span id="up-count"></span></button>
+        <button type="button" class="btn btn-outline" id="up-clear">Clear all</button>
+      </div>
+
+      <p class="up-error" id="up-error" hidden></p>
+    </div>
+
+    <!-- Finished -->
+    <div id="up-done" class="up-state" hidden>
+      <div class="up-state-icon up-state-icon--ok">✓</div>
+      <h3>Got it — thank you.</h3>
+      <p id="up-done-detail">Your files are safely uploaded. We'll be in touch shortly.</p>
+      <button type="button" class="btn btn-outline" id="up-again">Upload more files</button>
+    </div>
+
+  </div>
+</section>
+
+{% raw %}
+<script>
+(function () {
+  var TOKEN = new URLSearchParams(location.search).get('c') || '';
+
+  var el = {
+    checking: document.getElementById('up-checking'),
+    denied:   document.getElementById('up-denied'),
+    app:      document.getElementById('up-app'),
+    done:     document.getElementById('up-done'),
+    doneText: document.getElementById('up-done-detail'),
+    client:   document.getElementById('up-client'),
+    dz:       document.getElementById('up-dz'),
+    input:    document.getElementById('up-input'),
+    list:     document.getElementById('up-list'),
+    meta:     document.getElementById('up-meta'),
+    actions:  document.getElementById('up-actions'),
+    send:     document.getElementById('up-send'),
+    clear:    document.getElementById('up-clear'),
+    count:    document.getElementById('up-count'),
+    error:    document.getElementById('up-error'),
+    again:    document.getElementById('up-again'),
+    name:     document.getElementById('up-name'),
+    email:    document.getElementById('up-email'),
+    note:     document.getElementById('up-note')
+  };
+
+  var queue = [];
+  var nextId = 1;
+  var busy = false;
+  var PREVIEWABLE = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+  function show(node) { node.hidden = false; }
+  function hide(node) { node.hidden = true; }
+
+  function humanSize(bytes) {
+    if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(1) + ' GB';
+    if (bytes >= 1048576) return (bytes / 1048576).toFixed(1) + ' MB';
+    if (bytes >= 1024) return Math.round(bytes / 1024) + ' KB';
+    return bytes + ' B';
+  }
+
+  function extOf(name) {
+    var m = String(name).toLowerCase().match(/\.([a-z0-9]+)$/);
+    return m ? m[1] : '?';
+  }
+
+  function setError(msg) {
+    if (!msg) { hide(el.error); el.error.textContent = ''; return; }
+    el.error.textContent = msg;
+    show(el.error);
+  }
+
+  // ── Gate on the token ────────────────────────────────────────────────
+  function validate() {
+    if (!TOKEN) { hide(el.checking); show(el.denied); return; }
+    fetch('/api/upload-url?token=' + encodeURIComponent(TOKEN))
+      .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
+      .then(function (data) {
+        hide(el.checking);
+        if (data && data.ok) {
+          el.client.textContent = data.client;
+          show(el.app);
+        } else {
+          show(el.denied);
+        }
+      })
+      .catch(function () { hide(el.checking); show(el.denied); });
+  }
+
+  // ── Queue rendering ──────────────────────────────────────────────────
+  function render() {
+    el.list.innerHTML = '';
+    queue.forEach(function (item) {
+      var li = document.createElement('li');
+      li.className = 'up-row up-row--' + item.status;
+      li.dataset.id = item.id;
+
+      var thumb = document.createElement('div');
+      thumb.className = 'up-thumb';
+      if (PREVIEWABLE.indexOf(item.file.type) !== -1) {
+        var img = document.createElement('img');
+        img.src = URL.createObjectURL(item.file);
+        img.alt = '';
+        img.onload = function () { URL.revokeObjectURL(img.src); };
+        thumb.appendChild(img);
+      } else {
+        thumb.textContent = extOf(item.file.name).toUpperCase();
+        thumb.classList.add('up-thumb--ext');
+      }
+
+      var body = document.createElement('div');
+      body.className = 'up-row-body';
+
+      var nameRow = document.createElement('div');
+      nameRow.className = 'up-row-name';
+      nameRow.textContent = item.file.name;
+
+      var sub = document.createElement('div');
+      sub.className = 'up-row-sub';
+      sub.textContent = item.message || humanSize(item.file.size);
+
+      var bar = document.createElement('div');
+      bar.className = 'up-bar';
+      var fill = document.createElement('span');
+      fill.style.width = item.progress + '%';
+      bar.appendChild(fill);
+
+      body.appendChild(nameRow);
+      body.appendChild(sub);
+      body.appendChild(bar);
+
+      var action = document.createElement('div');
+      action.className = 'up-row-action';
+      if (item.status === 'queued' && !busy) {
+        var rm = document.createElement('button');
+        rm.type = 'button';
+        rm.className = 'up-remove';
+        rm.setAttribute('aria-label', 'Remove ' + item.file.name);
+        rm.textContent = '✕';
+        rm.onclick = function () {
+          queue = queue.filter(function (q) { return q.id !== item.id; });
+          render();
+        };
+        action.appendChild(rm);
+      } else if (item.status === 'done') {
+        action.textContent = '✓';
+        action.className += ' up-row-action--ok';
+      } else if (item.status === 'error') {
+        action.textContent = '!';
+        action.className += ' up-row-action--bad';
+      }
+
+      li.appendChild(thumb);
+      li.appendChild(body);
+      li.appendChild(action);
+      el.list.appendChild(li);
+    });
+
+    var pending = queue.filter(function (q) { return q.status === 'queued'; }).length;
+    if (queue.length) { show(el.meta); show(el.actions); } else { hide(el.meta); hide(el.actions); }
+    el.count.textContent = pending ? '(' + pending + ')' : '';
+    el.send.disabled = busy || pending === 0;
+    el.clear.disabled = busy;
+  }
+
+  function addFiles(fileList) {
+    setError('');
+    Array.prototype.forEach.call(fileList, function (file) {
+      var dupe = queue.some(function (q) {
+        return q.file.name === file.name && q.file.size === file.size;
+      });
+      if (dupe) return;
+      queue.push({ id: nextId++, file: file, status: 'queued', progress: 0, message: '', key: null });
+    });
+    render();
+  }
+
+  // ── Drag and drop ────────────────────────────────────────────────────
+  el.dz.addEventListener('click', function () { if (!busy) el.input.click(); });
+  el.dz.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!busy) el.input.click(); }
+  });
+  el.input.addEventListener('change', function () { addFiles(el.input.files); el.input.value = ''; });
+
+  ['dragenter', 'dragover'].forEach(function (evt) {
+    el.dz.addEventListener(evt, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      if (!busy) el.dz.classList.add('is-over');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (evt) {
+    el.dz.addEventListener(evt, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      el.dz.classList.remove('is-over');
+    });
+  });
+  el.dz.addEventListener('drop', function (e) {
+    if (busy) return;
+    if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+  });
+  // Stop the browser from navigating away if a file misses the dropzone.
+  window.addEventListener('dragover', function (e) { e.preventDefault(); });
+  window.addEventListener('drop', function (e) { e.preventDefault(); });
+
+  // ── Uploading ────────────────────────────────────────────────────────
+  function putFile(item, url, contentType) {
+    return new Promise(function (resolve) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('PUT', url, true);
+      xhr.setRequestHeader('Content-Type', contentType);
+      xhr.upload.onprogress = function (e) {
+        if (!e.lengthComputable) return;
+        item.progress = Math.round((e.loaded / e.total) * 100);
+        item.message = 'Uploading… ' + item.progress + '%';
+        render();
+      };
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          item.status = 'done'; item.progress = 100; item.message = 'Uploaded';
+        } else {
+          item.status = 'error'; item.message = 'Upload failed (' + xhr.status + ')';
+        }
+        render(); resolve();
+      };
+      xhr.onerror = function () {
+        item.status = 'error'; item.message = 'Network error — check your connection';
+        render(); resolve();
+      };
+      xhr.send(item.file);
+    });
+  }
+
+  el.send.addEventListener('click', function () {
+    var pending = queue.filter(function (q) { return q.status === 'queued'; });
+    if (!pending.length || busy) return;
+
+    busy = true; setError(''); render();
+
+    fetch('/api/upload-url', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        token: TOKEN,
+        files: pending.map(function (q) {
+          return { name: q.file.name, size: q.file.size, type: q.file.type };
+        })
+      })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.ok) {
+          throw new Error(data && data.error === 'storage_not_configured'
+            ? 'Uploads are temporarily unavailable. Please email us and we will sort it out.'
+            : 'We could not start the upload. Please refresh and try again.');
+        }
+
+        var chain = Promise.resolve();
+        data.files.forEach(function (result, i) {
+          var item = pending[i];
+          if (!item) return;
+          if (!result.ok) {
+            item.status = 'error';
+            item.message = result.error === 'too_large'
+              ? 'Too large — the limit is ' + humanSize(result.maxBytes)
+              : 'That file type is not supported';
+            return;
+          }
+          item.key = result.key;
+          // Sequential, so one huge file does not starve the others.
+          chain = chain.then(function () { return putFile(item, result.url, result.contentType); });
+        });
+        render();
+        return chain;
+      })
+      .then(function () {
+        var uploaded = queue.filter(function (q) { return q.status === 'done'; });
+        if (!uploaded.length) {
+          busy = false; render();
+          setError('Nothing uploaded. Check the messages above and try again.');
+          return;
+        }
+        return fetch('/api/upload-complete', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            token: TOKEN,
+            uploaderName: el.name.value,
+            uploaderEmail: el.email.value,
+            note: el.note.value,
+            files: uploaded.map(function (q) {
+              return { key: q.key, name: q.file.name, size: q.file.size };
+            })
+          })
+        }).catch(function () { /* files are already stored; ignore */ })
+          .then(function () {
+            var failed = queue.filter(function (q) { return q.status === 'error'; }).length;
+            el.doneText.textContent = failed
+              ? uploaded.length + ' file' + (uploaded.length === 1 ? '' : 's') + ' uploaded. '
+                + failed + ' could not be sent — you can try those again below.'
+              : uploaded.length + ' file' + (uploaded.length === 1 ? '' : 's')
+                + ' uploaded safely. We will be in touch shortly.';
+            queue = queue.filter(function (q) { return q.status === 'error'; });
+            queue.forEach(function (q) { q.status = 'queued'; q.progress = 0; q.message = ''; });
+            busy = false;
+            hide(el.app); show(el.done);
+            render();
+          });
+      })
+      .catch(function (err) {
+        busy = false; render();
+        setError(err.message || 'Something went wrong. Please try again.');
+      });
+  });
+
+  el.clear.addEventListener('click', function () {
+    if (busy) return;
+    queue = []; setError(''); render();
+  });
+
+  el.again.addEventListener('click', function () {
+    hide(el.done); show(el.app); setError(''); render();
+  });
+
+  validate();
+})();
+</script>
+{% endraw %}
