@@ -133,15 +133,19 @@ document.addEventListener('click', e => {
   const hero = document.querySelector('.hero');
   if (!hero || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   let raf = null;
+  let h = window.innerHeight;   // cached; measured by ResizeObserver, never read during scroll
   function update() {
     raf = null;
-    const h = hero.offsetHeight || window.innerHeight;
     const p = Math.min(1, Math.max(0, window.scrollY / h));
     hero.style.setProperty('--hp', p.toFixed(4));
   }
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => { h = hero.offsetHeight || window.innerHeight; update(); }).observe(hero);
+  } else {
+    window.addEventListener('resize', () => { h = hero.offsetHeight || window.innerHeight; update(); });
+  }
   window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
-  window.addEventListener('resize', update);
-  update();
+  raf = requestAnimationFrame(update);
 })();
 
 // ── Stagger indices for revealed groups and the mobile sheet ──
