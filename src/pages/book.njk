@@ -1,0 +1,138 @@
+---
+layout: base.njk
+title: Book a Call — Flatirons Creative Studio
+description: Schedule time with Flatirons Creative Studio. Choose a 30-minute intro call to get acquainted, or a 60-minute deep dive to dig into your project in detail.
+permalink: /book/
+---
+
+<section class="page-header">
+  <div class="ph-inner">
+    <p class="eyebrow">Let's connect</p>
+    <h1>Book a <em>call</em></h1>
+    <p class="ph-lead">Pick the format that fits where you are. No prep required — just show up ready to talk about where you're headed.</p>
+  </div>
+</section>
+
+<section class="section book-section">
+  <div class="inner">
+    <div class="book-grid">
+
+      <div class="book-card fade-up">
+        <div class="book-card-eyebrow">30 min</div>
+        <h2 class="book-card-title">Intro Call</h2>
+        <p class="book-card-desc">A no-pressure conversation to see if we're a good fit. We'll cover what you're building, what you're stuck on, and whether FCS is the right partner for you.</p>
+        <ul class="book-card-list">
+          <li>Overview of your project or brand</li>
+          <li>Quick look at scope &amp; goals</li>
+          <li>Next steps if there's a fit</li>
+        </ul>
+        <a href="#" class="btn btn-amber" data-calendly="https://calendly.com/tcusworth-fcstudio/30min">Book 30-min intro ↗</a>
+      </div>
+
+      <div class="book-card book-card--featured fade-up">
+        <div class="book-card-eyebrow">60 min</div>
+        <h2 class="book-card-title">Deep Dive</h2>
+        <p class="book-card-desc">For projects that need a real conversation. We'll dig into strategy, creative direction, tech stack, timeline, and what success looks like for your team.</p>
+        <ul class="book-card-list">
+          <li>Brand, product, or campaign strategy</li>
+          <li>Creative direction &amp; visual approach</li>
+          <li>Technical scope &amp; production plan</li>
+          <li>Budget &amp; timeline discussion</li>
+        </ul>
+        <a href="#" class="btn btn-amber" data-calendly="https://calendly.com/tcusworth-fcstudio/60min">Book 60-min deep dive ↗</a>
+      </div>
+
+    </div>
+
+    <div class="book-note fade-up">
+      <p>Not sure which to choose? Start with the 30-min intro — if we need more time, we'll schedule it from there.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+.book-section { padding-block: var(--space-2xl, 6rem); }
+
+.book-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+@media (max-width: 680px) {
+  .book-grid { grid-template-columns: 1fr; }
+}
+
+.book-card {
+  background: var(--surface-2, #f8f8f7);
+  border: 1px solid var(--border, #e8e4df);
+  border-radius: 16px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.book-card--featured {
+  background: var(--ink, #1a1714);
+  border-color: var(--ink, #1a1714);
+  color: var(--paper, #f5f1eb);
+}
+
+.book-card-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber, #d48c3a);
+}
+
+.book-card-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.book-card-desc {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.book-card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.book-card-list li {
+  font-size: 0.875rem;
+  padding-left: 1.25rem;
+  position: relative;
+  opacity: 0.8;
+}
+
+.book-card-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--amber, #d48c3a);
+  font-size: 0.75rem;
+  top: 0.1em;
+}
+
+.book-note {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  opacity: 0.65;
+}
+</style>
