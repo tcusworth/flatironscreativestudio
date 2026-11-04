@@ -6,7 +6,8 @@ eleventyExcludeFromCollections: true
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for p in collections.all %}
 {%- if p.url and not p.data.noindex and ('.html' not in p.url) and ('.xml' not in p.url) %}
-  <url><loc>https://flatironscreativestudio.com{{ p.url }}</loc></url>
+  {%- set lm = p.inputPath | gitLastMod %}
+  <url><loc>https://flatironscreativestudio.com{{ p.url }}</loc>{% if lm %}<lastmod>{{ lm }}</lastmod>{% endif %}</url>
 {%- endif %}
 {%- endfor %}
 </urlset>
