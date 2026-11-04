@@ -4,3 +4,4 @@ _site/
 .env.*
 .netlify/
 .DS_Store
+Claude outputs/
