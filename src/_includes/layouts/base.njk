@@ -3,6 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P9KNK007X1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-P9KNK007X1');
+  </script>
   <title>{{ title if title else "Flatirons Creative Studio — Boulder's senior digital studio" }}</title>
   <meta name="description" content="{{ description if description else 'A senior Boulder studio for websites, AI clarity, SEO, and custom software.' }}">
   <link rel="canonical" href="https://flatironscreativestudio.com{{ page.url }}">
