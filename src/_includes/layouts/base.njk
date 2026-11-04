@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  {% if noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P9KNK007X1"></script>
   <script>
@@ -26,6 +27,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "ProfessionalService"],
+        "@id": "https://flatironscreativestudio.com/#business",
+        "name": "Flatirons Creative Studio",
+        "url": "https://flatironscreativestudio.com/",
+        "logo": "https://flatironscreativestudio.com/assets/img/logo.png",
+        "image": "https://flatironscreativestudio.com/assets/img/og-image.png",
+        "description": "A senior Boulder, Colorado studio for web design, SEO, AI search visibility, AI productivity and custom software.",
+        "email": "hello@flatironscreativestudio.com",
+        "telephone": "+1-719-497-1641",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Boulder",
+          "addressRegion": "CO",
+          "addressCountry": "US"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Boulder" },
+          { "@type": "State", "name": "Colorado" }
+        ],
+        "founder": {
+          "@type": "Person",
+          "name": "Trevor Cusworth",
+          "sameAs": "https://linkedin.com/in/trevorcusworth"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://flatironscreativestudio.com/#website",
+        "url": "https://flatironscreativestudio.com/",
+        "name": "Flatirons Creative Studio",
+        "publisher": { "@id": "https://flatironscreativestudio.com/#business" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body class="{{ 'has-transparent-nav' if page.url == '/' else '' }}">
@@ -40,7 +81,6 @@
       <a href="/services/" {% if page.url == '/services/' %}class="active"{% endif %}>Services</a>
       <a href="/work/"     {% if page.url == '/work/'     %}class="active"{% endif %}>Work</a>
       <a href="/blog/"     {% if page.url == '/blog/'     %}class="active"{% endif %}>Blog</a>
-      <a href="/webinars/" {% if page.url == '/webinars/' %}class="active"{% endif %}>Webinars</a>
       <a href="/about/"    {% if page.url == '/about/'    %}class="active"{% endif %}>About</a>
       <a href="/contact/"  {% if page.url == '/contact/'  %}class="active"{% endif %}>Contact</a>
       <a href="/book/"     {% if page.url == '/book/'     %}class="active"{% endif %}>Book</a>
@@ -59,7 +99,6 @@
   <a href="/services/">Services</a>
   <a href="/work/">Work</a>
   <a href="/blog/">Blog</a>
-  <a href="/webinars/">Webinars</a>
   <a href="/about/">About</a>
   <a href="/contact/">Contact</a>
   <a href="/book/">Book</a>
@@ -82,9 +121,9 @@
     <div class="footer-col">
       <h6>Services</h6>
       <ul>
-        <li><a href="/services/">Web design &amp; build</a></li>
-        <li><a href="/services/">AI Clarity Index</a></li>
-        <li><a href="/services/">SEO retainer</a></li>
+        <li><a href="/services/web-design-boulder/">Web design &amp; build</a></li>
+        <li><a href="/services/ai-clarity-index/">AI Clarity Index</a></li>
+        <li><a href="/services/seo-retainer/">SEO retainer</a></li>
         <li><a href="/services/">AI productivity</a></li>
         <li><a href="/services/">Custom SaaS</a></li>
       </ul>

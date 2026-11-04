@@ -1,0 +1,56 @@
+---
+layout: base.njk
+---
+<div class="page-header">
+  <div class="inner">
+    <div class="section-label">{{ tag }}</div>
+    <h1 style="font-family:'Poppins',sans-serif;font-weight:800;text-transform:none;letter-spacing:-.02em;font-size:clamp(32px,4.6vw,60px);line-height:1.08;max-width:22ch">{{ headline }}</h1>
+    <p>By Trevor Cusworth · {{ publishedLabel }}</p>
+  </div>
+</div>
+
+<article class="section">
+  <div class="inner">
+    <div class="post-body">
+      {{ content | safe }}
+      <p class="post-back"><a href="/blog/">← All articles</a></p>
+    </div>
+  </div>
+</article>
+
+<div class="cta-band">
+  <div class="inner">
+    <h2>Want to talk<br><em>strategy?</em></h2>
+    <p>A 30-minute call is free. We'll tell you what we'd do if we were you.</p>
+    <div class="cta-row">
+      <a href="#" class="btn btn-amber btn-xl" data-cal>Book a call ↗</a>
+      <a href="/services/" class="btn btn-ghost-light btn-xl">See services</a>
+    </div>
+  </div>
+</div>
+
+<script type="application/ld+json">
+{{ {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": headline,
+  "description": description,
+  "image": "https://flatironscreativestudio.com" + image,
+  "datePublished": published,
+  "author": { "@type": "Person", "name": "Trevor Cusworth", "url": "https://linkedin.com/in/trevorcusworth" },
+  "publisher": { "@id": "https://flatironscreativestudio.com/#business" },
+  "mainEntityOfPage": "https://flatironscreativestudio.com" + page.url
+} | dump | safe }}
+</script>
+
+<style>
+.post-body { max-width: 720px; margin: 0 auto; }
+.post-body p, .post-body li { font-size: 18px; line-height: 1.75; color: #3a3a30; }
+.post-body p { margin-bottom: 22px; }
+.post-body h2 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(24px,3vw,32px); letter-spacing: -.01em; line-height: 1.2; color: #1a1a12; margin: 48px 0 16px; }
+.post-body ul, .post-body ol { margin: 0 0 24px 1.25rem; }
+.post-body li { margin-bottom: 10px; }
+.post-body a { color: #c8961e; font-weight: 600; }
+.post-back { margin-top: 48px; font-size: 15px !important; }
+@media (max-width: 760px) { .post-body p, .post-body li { font-size: 16px; } }
+</style>
