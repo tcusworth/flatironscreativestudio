@@ -118,15 +118,14 @@
   });
 })();
 
-// ── Calendly ──
-const CALENDLY_DEFAULT = 'https://calendly.com/tcusworth-fcstudio/30min';
+// ── Booking (cal.com) ──
+const CAL_DEFAULT = 'https://cal.com/tcusworthfcs/30min';
 document.addEventListener('click', e => {
-  const btn = e.target.closest('[data-calendly]');
+  const btn = e.target.closest('[data-cal]');
   if (!btn) return;
   e.preventDefault();
-  const url = btn.dataset.calendly || CALENDLY_DEFAULT;
-  if (window.Calendly?.initPopupWidget) Calendly.initPopupWidget({ url });
-  else window.open(url, '_blank', 'noopener');
+  const url = btn.dataset.cal || CAL_DEFAULT;
+  window.open(url, '_blank', 'noopener');
 });
 
 // ── Hero cinematic settle ──
