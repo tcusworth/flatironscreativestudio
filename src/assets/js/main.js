@@ -1,5 +1,9 @@
 /* Flatirons Creative Studio — main.js */
 
+function trackEvent(name, parameters) {
+  if (typeof window.gtag === 'function') window.gtag('event', name, parameters);
+}
+
 // ── Nav scroll ──
 (function() {
   const nav = document.getElementById('nav');
@@ -7,6 +11,34 @@
   function update() { nav.classList.toggle('scrolled', window.scrollY > 40); }
   window.addEventListener('scroll', update, { passive: true });
   update();
+})();
+
+// ── Lead attribution and service preselection ──
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const serviceAliases = {
+    'Web Design & Development': 'Web design & build',
+    'AI Productivity Consulting': 'AI productivity'
+  };
+  const requestedService = serviceAliases[params.get('service')] || params.get('service');
+  const attribution = {
+    source: params.get('utm_source') || params.get('source') || document.referrer || 'direct',
+    medium: params.get('utm_medium') || (params.get('source') ? 'referral' : 'direct'),
+    campaign: params.get('utm_campaign') || ''
+  };
+
+  ['lead-source', 'lead-medium', 'lead-campaign'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) input.value = attribution[id.replace('lead-', '')];
+  });
+
+  if (!requestedService) return;
+  const chip = [...document.querySelectorAll('.chip[data-v]')]
+    .find(item => item.dataset.v.toLowerCase() === requestedService.toLowerCase());
+  if (!chip) return;
+  chip.classList.add('on');
+  const input = document.getElementById('services-input');
+  if (input) input.value = chip.dataset.v;
 })();
 
 // ── Mobile burger ──
@@ -110,7 +142,17 @@
       if (label)  label.textContent = 'Sending…';
       try {
         const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-        if (res.ok) { if (sent) sent.hidden = false; form.reset(); form.querySelectorAll('.chip.on').forEach(c => c.classList.remove('on')); }
+        if (res.ok) {
+          trackEvent('generate_lead', {
+            form_name: formId,
+            service_interest: form.querySelector('#services-input')?.value || 'not_selected',
+            page_path: window.location.pathname,
+            lead_source: form.querySelector('#lead-source')?.value || 'direct'
+          });
+          if (sent) sent.hidden = false;
+          form.reset();
+          form.querySelectorAll('.chip.on').forEach(c => c.classList.remove('on'));
+        }
         else { if (err) err.hidden = false; }
       } catch (_) { if (err) err.hidden = false; }
       finally { if (submit) submit.disabled = false; if (label) label.textContent = resetLabel; }
@@ -124,8 +166,19 @@ document.addEventListener('click', e => {
   const btn = e.target.closest('[data-cal]');
   if (!btn) return;
   e.preventDefault();
-  const url = btn.dataset.cal || CAL_DEFAULT;
-  window.open(url, '_blank', 'noopener');
+  const url = new URL(btn.dataset.cal || CAL_DEFAULT);
+  const campaign = btn.dataset.service
+    ? btn.dataset.service.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+    : 'general-booking';
+  url.searchParams.set('utm_source', 'flatironscreativestudio.com');
+  url.searchParams.set('utm_medium', 'referral');
+  url.searchParams.set('utm_campaign', campaign);
+  trackEvent('book_call_click', {
+    service_name: btn.dataset.service || 'general',
+    cta_location: btn.dataset.ctaLocation || 'unspecified',
+    booking_type: url.pathname.includes('60-min') ? 'deep_dive' : 'intro'
+  });
+  window.open(url.toString(), '_blank', 'noopener');
 });
 
 // ── Hero cinematic settle ──

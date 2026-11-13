@@ -40,7 +40,8 @@ layout: base.njk
     <h2>{{ ctaHeading | safe }}</h2>
     <p>{{ ctaText }}</p>
     <div class="cta-row">
-      <a href="#" class="btn btn-amber btn-xl" data-cal>Book a free 30-min call ↗</a>
+      <a href="/contact/?service={{ serviceName | urlencode }}&source=service-page" class="btn btn-amber btn-xl" data-service="{{ serviceName }}" data-cta-location="service-page">Talk about {{ serviceName }} ↗</a>
+      <a href="#" class="btn btn-ghost-light btn-xl" data-cal data-service="{{ serviceName }}" data-cta-location="service-page">Book a free 30-min call ↗</a>
       <a href="/work/" class="btn btn-ghost-light btn-xl">See our work</a>
     </div>
   </div>

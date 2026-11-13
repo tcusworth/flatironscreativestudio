@@ -14,6 +14,13 @@
 <meta property="og:url" content="https://flatironscreativestudio.com/pipeline-os/">
 <meta property="og:image" content="https://flatironscreativestudio.com/assets/img/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P9KNK007X1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-P9KNK007X1');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -657,6 +664,14 @@
     fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
       .then(function(r){
         if(!r.ok) throw new Error('bad');
+        if(typeof window.gtag==='function') {
+          window.gtag('event','generate_lead',{
+            form_name:'pipeline_leak_audit',
+            lead_qualification:noLeads ? 'no_inbound_leads' : 'has_inbound_leads',
+            page_path:window.location.pathname,
+            lead_source:'pipeline-os'
+          });
+        }
         document.getElementById('intakeCard').hidden=true;
         var card=document.getElementById('bookCard');
         if(noLeads){
@@ -667,6 +682,14 @@
         card.hidden=false; card.scrollIntoView({behavior:'smooth',block:'center'});
       })
       .catch(function(){ m.className='form-msg err'; m.innerHTML='That didn’t send. Please email <a href="mailto:tcusworth@fcstudio.us">tcusworth@fcstudio.us</a>.'; b.disabled=false; b.textContent='Book a Pipeline Leak Audit'; });
+  });
+  var book=document.getElementById('bookBtn');
+  if(book) book.addEventListener('click',function(){
+    if(typeof window.gtag==='function') window.gtag('event','book_call_click',{
+      service_name:'Pipeline Operating System',
+      cta_location:'pipeline_os_completion',
+      booking_type:'pipeline_leak_audit'
+    });
   });
 })();
 </script>

@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flatirons Creative Studio — A Website Refresh That Catches Customers</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P9KNK007X1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-P9KNK007X1');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -395,7 +402,7 @@
   <div class="wrap">
     <h2>Let's find out what it's costing you to wait.</h2>
     <p>Fifteen minutes, no pressure, no obligation. We'll show you exactly what's slipping through the cracks and what it would take to fix it.</p>
-    <a href="https://cal.com/tcusworthfcs/30min" class="btn btn-amber">Book your free call</a>
+    <a href="https://cal.com/tcusworthfcs/30min?utm_source=flatironscreativestudio.com&utm_medium=referral&utm_campaign=local-growth-system" class="btn btn-amber" data-booking-location="local_growth_final_cta">Book your free call</a>
   </div>
 </section>
 
@@ -431,6 +438,18 @@
       } else {
         item.classList.add('open');
         a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-booking-location]').forEach(link => {
+    link.addEventListener('click', () => {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'book_call_click', {
+          service_name: 'Local Growth System',
+          cta_location: link.dataset.bookingLocation,
+          booking_type: 'intro'
+        });
       }
     });
   });
