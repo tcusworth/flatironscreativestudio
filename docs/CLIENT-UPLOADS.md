@@ -120,7 +120,7 @@ file shows its own progress bar. They can add their name, email, and a note.
 Nothing is required except the files.
 
 If the link is wrong or expired they get a plain "this link isn't valid"
-message pointing at `hello@flatironscreativestudio.com` — no hint that other
+message pointing at `tcusworth@fcstudio.us` — no hint that other
 valid links exist.
 
 ---
