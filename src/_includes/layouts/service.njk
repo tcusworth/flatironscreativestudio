@@ -53,10 +53,12 @@ layout: base.njk
   "@graph": [
     {
       "@type": "Service",
+      "@id": "https://flatironscreativestudio.com" + page.url + "#service",
       "name": serviceName,
       "serviceType": serviceType,
       "description": description,
       "url": "https://flatironscreativestudio.com" + page.url,
+      "mainEntityOfPage": "https://flatironscreativestudio.com" + page.url,
       "provider": { "@id": "https://flatironscreativestudio.com/#business" },
       "areaServed": [
         { "@type": "City", "name": "Boulder" },
