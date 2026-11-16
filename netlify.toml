@@ -21,3 +21,5 @@
   for = "/upload/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
+
+# AI Clarity campaign deploy
