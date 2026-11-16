@@ -1,0 +1,138 @@
+---
+layout: base.njk
+title: "Free AI Clarity Check | Flatirons Creative Studio"
+description: "Find out whether ChatGPT and Gemini understand and recommend your business, which competitors appear instead, and where your biggest AI discovery gaps are."
+permalink: /ai-clarity-check/
+---
+
+<div class="page-header">
+  <div class="inner">
+    <div class="section-label">AI Clarity Check · Boulder, CO</div>
+    <h1>Is ChatGPT recommending<br><em>your business?</em></h1>
+    <p>Get a practical snapshot of how AI systems understand your business, which competitors appear, and the biggest gaps worth fixing first.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="inner">
+    <div class="contact-grid">
+      <div>
+        <div class="svc-detail-intro fade-up" style="max-width:760px">
+          <h2 class="section-h" style="font-size:clamp(28px,4vw,46px);margin-bottom:18px">Get your <em>AI Clarity Check</em></h2>
+          <p style="font-size:18px;line-height:1.75;color:#444">We'll review how ChatGPT and Gemini understand your business, compare you with the competitors you name, and identify the most important discovery gaps we find.</p>
+          <p style="font-size:18px;line-height:1.75;color:#444">This is a focused entry-point diagnostic. The full AI Clarity Index audit expands the analysis across ChatGPT, Gemini, Claude and Perplexity, including citations, recommendation visibility, entity accuracy and customer action paths.</p>
+        </div>
+
+        <form class="contact-form" id="clarityCheckForm" action="https://formspree.io/f/xpzgwbgp" method="POST" style="margin-top:36px">
+          <input type="hidden" name="lead_source" value="ai-clarity-check">
+          <input type="hidden" name="lead_campaign" value="ai-clarity-index-launch">
+
+          <div class="field">
+            <label for="business_name">Business name</label>
+            <input type="text" id="business_name" name="business_name" placeholder="Your business name" required>
+          </div>
+
+          <div class="field">
+            <label for="website">Website</label>
+            <input type="url" id="website" name="website" placeholder="https://yourbusiness.com" required>
+          </div>
+
+          <div class="field">
+            <label for="service_area">Location / service area</label>
+            <input type="text" id="service_area" name="service_area" placeholder="Boulder, CO · Boulder County · Front Range" required>
+          </div>
+
+          <div class="field">
+            <label for="primary_service">Primary service</label>
+            <input type="text" id="primary_service" name="primary_service" placeholder="The service you most want customers to find" required>
+          </div>
+
+          <div class="field">
+            <label for="competitor_1">Competitor 1</label>
+            <input type="text" id="competitor_1" name="competitor_1" placeholder="Competitor name or website" required>
+          </div>
+
+          <div class="field">
+            <label for="competitor_2">Competitor 2</label>
+            <input type="text" id="competitor_2" name="competitor_2" placeholder="Competitor name or website" required>
+          </div>
+
+          <div class="field">
+            <label for="competitor_3">Competitor 3</label>
+            <input type="text" id="competitor_3" name="competitor_3" placeholder="Competitor name or website" required>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required>
+          </div>
+
+          <button type="submit" class="btn btn-amber btn-lg" id="claritySubmit" style="align-self:flex-start">
+            <span class="btn-label">Get an AI Clarity Check</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+          </button>
+
+          <p id="claritySent" hidden style="color:#3a7a4a;font-weight:600;margin-top:8px">✓ Request received. We'll review your business and be in touch.</p>
+          <p id="clarityError" hidden style="color:#a04040;font-weight:600;margin-top:8px">Something went wrong. Email us at tcusworth@fcstudio.us</p>
+        </form>
+      </div>
+
+      <aside class="contact-side">
+        <div class="contact-card">
+          <h4>What you'll learn</h4>
+          <p>Whether AI systems understand what you do, whether you appear for relevant discovery questions, which competitors show up instead, and the biggest information gaps worth investigating.</p>
+        </div>
+        <div class="contact-card">
+          <h4>Claimed ChatGPT profile?</h4>
+          <p>OpenAI now lets eligible businesses claim and manage business information in ChatGPT Business Hub. Claiming your business can help keep information current, but it does not guarantee that ChatGPT will recommend you in independent answers.</p>
+          <a href="https://openai.com/index/introducing-businesses-chatgpt/" target="_blank" rel="noopener" class="svc-more">Read OpenAI's announcement ↗</a>
+        </div>
+        <div class="contact-card">
+          <h4>Want the full audit?</h4>
+          <p>The AI Clarity Index measures how ChatGPT, Gemini, Claude and Perplexity understand, cite and recommend your business, with competitor comparisons and a prioritized Discovery Improvement Plan.</p>
+          <a href="/services/ai-clarity-index/" class="btn btn-dark">See the full AI Clarity Index ↗</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const form=document.getElementById('clarityCheckForm');
+  if(!form) return;
+  const submit=document.getElementById('claritySubmit');
+  const sent=document.getElementById('claritySent');
+  const error=document.getElementById('clarityError');
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    sent.hidden=true;
+    error.hidden=true;
+    submit.disabled=true;
+    const label=submit.querySelector('.btn-label');
+    const original=label.textContent;
+    label.textContent='Sending…';
+    try {
+      const response=await fetch(form.action,{
+        method:'POST',
+        body:new FormData(form),
+        headers:{'Accept':'application/json'}
+      });
+      if(!response.ok) throw new Error('submit failed');
+      form.reset();
+      sent.hidden=false;
+      if(window.gtag) gtag('event','ai_clarity_check_submit',{event_category:'lead'});
+    } catch(err) {
+      error.hidden=false;
+    } finally {
+      submit.disabled=false;
+      label.textContent=original;
+    }
+  });
+})();
+</script>
+
+<style>
+.svc-more{font-size:13px;font-weight:700;color:#c8961e;letter-spacing:.04em}
+.svc-more:hover{text-decoration:underline}
+</style>
