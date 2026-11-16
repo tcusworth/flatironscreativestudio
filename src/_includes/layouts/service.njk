@@ -40,7 +40,11 @@ layout: base.njk
     <h2>{{ ctaHeading | safe }}</h2>
     <p>{{ ctaText }}</p>
     <div class="cta-row">
+      {% if serviceName == 'AI Clarity Index' or serviceName == 'AI Business Profile & Entity Verification' %}
+      <a href="/ai-clarity-check/" class="btn btn-amber btn-xl" data-service="{{ serviceName }}" data-cta-location="service-page">Get an AI Clarity Check ↗</a>
+      {% else %}
       <a href="/contact/?service={{ serviceName | urlencode }}&source=service-page" class="btn btn-amber btn-xl" data-service="{{ serviceName }}" data-cta-location="service-page">Talk about {{ serviceName }} ↗</a>
+      {% endif %}
       <a href="#" class="btn btn-ghost-light btn-xl" data-cal data-service="{{ serviceName }}" data-cta-location="service-page">Book a free 30-min call ↗</a>
       <a href="/work/" class="btn btn-ghost-light btn-xl">See our work</a>
     </div>
