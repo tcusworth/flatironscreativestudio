@@ -40,6 +40,11 @@ permalink: /contact/
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="jane@company.com" required>
           </div>
+          <div class="field">
+            <label for="phone">Mobile phone number (optional)</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 555-5555">
+          </div>
+
 
           <div class="field">
             <label for="company">Company / website (optional)</label>
@@ -66,6 +71,8 @@ permalink: /contact/
             <label for="message">Tell us about your project</label>
             <textarea id="message" name="message" placeholder="What's the goal, what exists today, and what's keeping you up at night?" required></textarea>
           </div>
+          {% include "sms-consent.njk" %}
+
 
           <button type="submit" class="btn btn-amber btn-lg" id="contactSubmit" style="align-self:flex-start">
             <span class="btn-label">Send enquiry</span>
