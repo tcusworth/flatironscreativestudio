@@ -177,6 +177,8 @@ noindex: true
         <label for="anything_else">Anything else we should know?</label>
         <textarea id="anything_else" name="anything_else" placeholder="Constraints, must-haves, internal stakeholders, anything that would help us scope this right."></textarea>
       </div>
+      {% include "sms-consent.njk" %}
+
 
       <button type="submit" class="btn btn-amber btn-lg" id="intakeSubmit" style="align-self:flex-start;margin-top:8px">
         <span class="btn-label">Send project details</span>

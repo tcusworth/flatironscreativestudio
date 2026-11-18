@@ -773,3 +773,12 @@ body.page-enter { animation: vtIn .5s cubic-bezier(.16,1,.3,1) both; }
   background: rgba(190,60,50,.08); border: 1px solid rgba(190,60,50,.25);
   color: #8f2f27; font-size: 14px; font-weight: 500;
 }
+
+/* Independent SMS consent options in customer forms */
+.sms-consent{border:1.5px solid rgba(0,0,0,.15);border-radius:10px;padding:20px;background:#faf8f3;min-width:0}
+.sms-consent legend{font-size:15px;font-weight:700;padding:0 6px;color:#1a1a12}
+.sms-consent p{font-size:13px;line-height:1.6;color:#555;margin:0 0 12px}
+.sms-consent .sms-check{display:flex;gap:10px;align-items:flex-start;margin:15px 0;font-size:13px;line-height:1.55;color:#25251f;cursor:pointer}
+.sms-consent .sms-check input{width:18px;height:18px;flex:0 0 18px;margin:2px 0 0;accent-color:#c8961e}
+.sms-consent .sms-disclosure{margin:14px 0 0;font-size:12px}
+.sms-consent a{color:#936700;text-decoration:underline}
