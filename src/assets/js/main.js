@@ -141,7 +141,16 @@ function trackEvent(name, parameters) {
       if (submit) submit.disabled = true;
       if (label)  label.textContent = 'Sending…';
       try {
-        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        // Capture explicit consent selections; unchecked options mean no permission.
+        const smsTimestamp = form.querySelector('[data-sms-timestamp]');
+        if (smsTimestamp) smsTimestamp.value = new Date().toISOString();
+        const payload = new FormData(form);
+        if (smsTimestamp) {
+          for (const kind of ['service', 'marketing']) {
+            payload.set(`sms_${kind}_consent`, form.querySelector(`[name="sms_${kind}_consent"]`)?.checked ? 'yes' : 'no');
+          }
+        }
+        const res = await fetch(form.action, { method: 'POST', body: payload, headers: { Accept: 'application/json' } });
         if (res.ok) {
           trackEvent('generate_lead', {
             form_name: formId,
